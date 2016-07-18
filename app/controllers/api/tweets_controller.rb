@@ -16,7 +16,8 @@ class Api::TweetsController < ApplicationController
     if @tweet.save
       render :show
     else
-      render json: @comment.errors.full_messages, status: :unprocessable_entity
+      @errors = @tweet.errors
+      render "api/shared/errors"
     end
   end
 
