@@ -8,10 +8,13 @@ class Api::TweetsController < ApplicationController
   end
 
   def create
-    @tweet = Tweet.new(tweet_params)
+    @tweet = Tweet.new({
+      author: params[:author],
+      body: params[:body]
+    })
 
     if @tweet.save
-      render json: @tweet
+      render :show
     else
       render json: @comment.errors.full_messages, status: :unprocessable_entity
     end
@@ -24,6 +27,6 @@ class Api::TweetsController < ApplicationController
 
   private
   def tweet_params
-    params.require(:tweet).permit(:body, :username)
+    params.require(:tweet).permit(:body, :author)
   end
 end
